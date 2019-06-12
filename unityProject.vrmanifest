@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.change.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "D:\\UserHomes\\s0562942\\Desktop\\Change Repo\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Change [Testing]"
+        }
+      }
+    }
+  ]
+}
