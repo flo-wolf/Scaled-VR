@@ -12,8 +12,8 @@ namespace Change
         private SteamVR_Behaviour_Pose m_Pose = null;
         private FixedJoint m_Joint = null;
 
-        private Interactable m_CurrentInteractable = null;
-        private List<Interactable> m_ContectInteractables = new List<Interactable>();
+        [SerializeField] private Interactable m_CurrentInteractable = null;
+        [SerializeField] private List<Interactable> m_ContectInteractables = new List<Interactable>();
 
 
         private void Start()
@@ -32,7 +32,7 @@ namespace Change
             }
 
             // Trigger Up
-            if (m_GrabAction.GetStateDown(m_Pose.inputSource))
+            if (m_GrabAction.GetStateUp(m_Pose.inputSource))
             {
                 print(m_Pose.inputSource + " Trigger Up");
                 Drop();
@@ -69,8 +69,10 @@ namespace Change
             m_CurrentInteractable = GeetNearestInteractable();
 
             // Null check
-            if (m_CurrentInteractable)
+            if (!m_CurrentInteractable)
                 return;
+
+            Debug.Log("nearest on pickup: " + m_ContectInteractables);
 
             // already held, check
             if (m_CurrentInteractable.m_ActiveHand)
@@ -92,8 +94,10 @@ namespace Change
         public void Drop()
         {
             // null check
-            if (m_CurrentInteractable)
+            if (!m_CurrentInteractable)
                 return;
+
+            Debug.Log("nearest on drop: " + m_ContectInteractables);
 
             // apply velocity
             Rigidbody targetBody = m_CurrentInteractable.GetComponent<Rigidbody>();
@@ -125,7 +129,7 @@ namespace Change
                 }
             }
 
-            return null;
+            return nearest;
         }
     }
 }

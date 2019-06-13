@@ -9,7 +9,7 @@ namespace Change
     {
 
         [HideInInspector]
-        public Hand m_ActiveHand = null;
+        public Change.Hand m_ActiveHand = null;
 
         // Start is called before the first frame update
         void Start()
