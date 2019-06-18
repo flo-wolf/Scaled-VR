@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +8,18 @@ namespace Change
 {
     public class Food : Interactable
     {
-        public float waterConsumption = 1f;
-        public float gasConsumption = 1f;
+        [Serializable]
+        public struct Emission
+        {
+            public float waterConsumption; // { get; private set; }
+            public float gasConsumption;
+        }
+
+        public Emission emission = new Emission
+        {
+            waterConsumption = 1f,
+            gasConsumption = 1f
+        };
 
         // Start is called before the first frame update
         void Start()

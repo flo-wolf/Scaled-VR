@@ -1,24 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Change
 {
     public class Scale : MonoBehaviour
     {
+        public class ScaleEvent : UnityEvent<Food.Emission> { }
+        public static ScaleEvent onScaleEvent = new ScaleEvent();
+
         [Header("Scale")]
         [SerializeField] private bool _registerFoodInHand = false;
+        public Food.Emission m_Emission;
+        [SerializeField] private List<Food> _connectedFood = new List<Food>();
 
-        [Header("Measurements")]
-        public float WaterConsumption = 0f; // { get; private set; }
-        public float GasConsumption = 0f;
-
-        private List<Food> _connectedFood = new List<Food>();
-
-
-        private void Start()
-        {
-        }
 
         private void OnTriggerStay(Collider other)
         {
@@ -46,24 +43,34 @@ namespace Change
             }
         }
 
-        private void UpdateConsumption()
+        private void UpdateEmissions()
         {
+            float startWater = m_Emission.waterConsumption;
+            float startGas = m_Emission.gasConsumption;
+
             float water = 0f;
             float gas = 0f;
 
             foreach(Food f in _connectedFood)
             {
-                water += f.waterConsumption;
-                gas += f.gasConsumption;
+                water += f.emission.waterConsumption;
+                gas += f.emission.gasConsumption;
             }
 
-            WaterConsumption = water;
-            GasConsumption = gas;
+            // emissions have changed
+            if(water != startWater || gas != startGas)
+            {
+                m_Emission.waterConsumption = water;
+                m_Emission.gasConsumption = gas;
+
+                // fire the event, passing the updated emissions
+                onScaleEvent.Invoke(m_Emission);
+            }
         }
 
         private void Update()
         {
-            UpdateConsumption();
+            UpdateEmissions();
         }
     }
 }
