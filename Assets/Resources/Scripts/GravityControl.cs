@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class GravityControl : MonoBehaviour
 {
-    Rigidbody rigid;
-
     public Vector3 gravity = new Vector3 (0, 9.81f ,0);
+
+    private Rigidbody _rigid;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigid = GetComponent<Rigidbody>();    
+        _rigid = GetComponent<Rigidbody>();    
     }
 
     // Update is called once per frame
     void Update()
     {
-        rigid.velocity = rigid.velocity * 0 + gravity * Time.deltaTime;
+        _rigid.velocity = _rigid.velocity * 0 + gravity * Time.deltaTime;
     }
 }

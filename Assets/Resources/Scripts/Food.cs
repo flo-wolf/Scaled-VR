@@ -5,8 +5,11 @@ using UnityEngine;
 
 namespace Change
 {
-    public class Consumable : Interactable
+    public class Food : Interactable
     {
+        public float waterConsumption = 1f;
+        public float gasConsumption = 1f;
+
         // Start is called before the first frame update
         void Start()
         {
