@@ -15,18 +15,23 @@ namespace Change
         }
 
         [Header("References")]
-        [SerializeField] private GameObject _bathtubPB;         // prefab reference
+        [SerializeField] private GameObject _bathtubPB;                 // prefab reference
 
-        [Header("Spawning")]
-        [SerializeField] private float _spawnDelay = 0.1f;      // time between spawning two bathtubs
-        [SerializeField] private int _amountPerLayerX = 10;     // how many bathtubs in a row
-        [SerializeField] private int _amountPerLayerZ = 10;     // how many bathtubs in a column
-        [SerializeField] private float _stepX = 2f;             // x distance between bathtubs
-        [SerializeField] private float _stepY = 1f;             // y distance between layers
-        [SerializeField] private float _stepZ = 1f;             // z distance between bathtubs
-        [SerializeField] private float _offsetY = -2f;          // lowerst layer height (offset)
-        [SerializeField] private float _offsetX = -9f;          // left-right offset (negative to center rows)
-        [SerializeField] private float _offsetZ = 3f;           // z offset to offset rows away from the player
+        [Header("Spawn Timing")]
+        [SerializeField] private bool _useFixedSpawnDuration = false;   // time between spawning two bathtubs
+        [SerializeField] private float _spawnDelay = 0.1f;              // if !_useFixedSpawnDuration use this as a delay between spawns
+        [SerializeField] private float _fixedSpawnDuration = 1f;      // if _useFixedSpawnDuration use this as a total duration in which all spawns should happen
+
+        [Header("Spawn Location Settings")]
+        [SerializeField] private int _amountPerLayerX = 10;             // how many bathtubs in a row
+        [SerializeField] private int _amountPerLayerZ = 10;             // how many bathtubs in a column
+        [SerializeField] private int _maxLayers = 20;                   // how many bathtubs in a column
+        [SerializeField] private float _stepX = 2f;                     // x distance between bathtubs
+        [SerializeField] private float _stepY = 1f;                     // y distance between layers
+        [SerializeField] private float _stepZ = 1f;                     // z distance between bathtubs
+        [SerializeField] private float _offsetY = -2f;                  // lowerst layer height (offset)
+        [SerializeField] private float _offsetX = -9f;                  // left-right offset (negative to center rows)
+        [SerializeField] private float _offsetZ = 3f;                   // z offset to offset rows away from the player
 
         [Header("Testing")]
         public int test_spawnAmount = 35;
@@ -34,6 +39,9 @@ namespace Change
         private Dictionary<GridPosition, GameObject> _spawnedBathtubs = new Dictionary<GridPosition, GameObject>();
         private int _AmountPerLayer { get { return _amountPerLayerX * _amountPerLayerZ; } }
         private Coroutine _currentUpdateCoroutine = null;
+
+        // we need to keep track of the last added positions in order to create shortcuts for the algorithm. The dictionary doesn't do that.
+        private List<GridPosition> _positionHistory = new List<GridPosition>();
 
         private void Start()
         {
@@ -58,98 +66,10 @@ namespace Change
                 _currentUpdateCoroutine = null;
             }
 
-            _currentUpdateCoroutine = StartCoroutine(C_UpdateBathtubs(endAmount, _spawnDelay));
+            _currentUpdateCoroutine = StartCoroutine(C_UpdateBathtubs(endAmount));
         }
 
-        /*
-        private void UpdateBathtubsOld(int endAmount)
-        {
-            Debug.Log("Update Bathtubs to: " + endAmount);
-            // testing, remove to allow multiple layers
-            if (endAmount < _AmountPerLayer)
-            {
-                int z = 0;
-                int x = 0;
-                int y = 0;
-
-                // not enough bathtubs => spawn more
-                if (endAmount > _spawnedBathtubs.Count)
-                {
-                    // iterate through the grid incrementally, row per row, and add tubs
-                    for (z = 0; z < _amountPerLayerZ; z++)
-                    {
-
-                        for (x = 0; x < _amountPerLayerX; x++)
-                        {
-                            GridPosition gridPos = new GridPosition
-                            {
-                                x = x,
-                                y = y,
-                                z = z,
-                            };
-
-                            if(!_spawnedBathtubs.ContainsKey(gridPos))
-                            {
-                                Vector3 spawnPos = new Vector3(_stepX * x + _offsetX, _offsetY, transform.position.z + _stepZ * z);
-                                GameObject bathtubGO = Instantiate(_bathtubPB, spawnPos, Quaternion.identity);
-                                bathtubGO.transform.parent = this.transform;
-                                _spawnedBathtubs.Add(gridPos, bathtubGO);
-                            }
-
-                            // we spanwed enough bathtubs, stop this sorcery!!
-                            if (_spawnedBathtubs.Count >= endAmount)
-                                goto End;
-                        }
-                    }
-                }
-
-                // too many bathtubs (help) => despawn
-                else
-                {
-                    Debug.Log("Despawn -- _z: " + _z + " _x: " + _x);
-
-                    // iterate through the grid decrementally, row per row, and remove tubs
-                    for (z = _amountPerLayerZ; z >= 0; z--)
-                    {
-                        for (x = _amountPerLayerX; x >= 0; x--)
-                        {
-
-                            GridPosition gridPos = new GridPosition
-                            {
-                                x = x,
-                                z = z,
-                                y = y
-                            };
-
-                            if (_spawnedBathtubs.ContainsKey(gridPos))
-                            {
-                                GameObject bathTub = _spawnedBathtubs[gridPos];
-                                Debug.Log("Despawn -- z: " + z + " x: " + x + " bathTub: " + bathTub);
-
-                                // remove the reference from our dictionary
-                                if (bathTub != null)
-                                    _spawnedBathtubs.Remove(gridPos);
-
-                                // kill it
-                                Destroy(bathTub.gameObject);
-                            }
-
-                            // we despanwed enough bathtubs, stop this sorcery!!
-                            if (_spawnedBathtubs.Count <= endAmount)
-                                goto End;
-                        }
-                    }
-                }
-
-            End:
-                // save last grid position to continue spawning/despawning from here
-                _z = z;
-                _x = x;
-            }
-        }
-        */
-
-        IEnumerator C_UpdateBathtubs(int endAmount, float delay)
+        IEnumerator C_UpdateBathtubs(int endAmount)
         {
             if (endAmount == _spawnedBathtubs.Count)
                 yield break;
@@ -157,48 +77,114 @@ namespace Change
             int x = 1;
             int y = 0;
             int z = 0;
+            float delay = 0f;
 
-            // iterate through the grid incrementally, row per row, and add tubs
-            for (z = 0; z < _amountPerLayerZ; z++)
+            if (!_useFixedSpawnDuration)
+                delay = _spawnDelay;
+            else
+                delay = _fixedSpawnDuration / Mathf.Abs(_spawnedBathtubs.Count - endAmount);
+            
+
+            // not enough bathtubs => spawn more
+            if (endAmount > _spawnedBathtubs.Count)
             {
-                for (x = 1; x <= _amountPerLayerX/2; x++)
+                // start at the buttom layer, move through that grid, then move a layer up and repeat.
+                for (y = 0; y < _maxLayers; y++)
                 {
-                    GridPosition gridPosLeft = new GridPosition
+                    // iterate through the grid incrementally, row per row, and add tubs from the center to the sides.
+                    for (z = 0; z < _amountPerLayerZ; z++)
                     {
-                        x = -x,
-                        y = y,
-                        z = z,
-                    };
+                        for (x = 1; x <= _amountPerLayerX / 2; x++)
+                        {
+                            GridPosition gridPosLeft = new GridPosition
+                            {
+                                x = -x,
+                                y = y,
+                                z = z,
+                            };
 
-                    GridPosition gridPosRight = new GridPosition
-                    {
-                        x = x,
-                        y = y,
-                        z = z,
-                    };
+                            GridPosition gridPosRight = new GridPosition
+                            {
+                                x = x,
+                                y = y,
+                                z = z,
+                            };
 
+                            // add left side first
+                            if (TrySpawnBathtubAt(gridPosLeft))
+                            {
 
-                    // left side first
-                    if (TrySpawnBathtubAt(gridPosLeft))
-                    {
-                        // we spanwed enough bathtubs, stop this sorcery!!
-                        if (_spawnedBathtubs.Count >= endAmount)
-                            yield break;
+                                // we spanwed enough bathtubs, stop this sorcery!!
+                                if (_spawnedBathtubs.Count >= endAmount)
+                                    yield break;
 
-                        TrySpawnBathtubAt(gridPosRight);
+                                // add right side
+                                TrySpawnBathtubAt(gridPosRight);
 
+                                // we spanwed enough bathtubs, stop this sorcery!!
+                                if (_spawnedBathtubs.Count >= endAmount)
+                                    yield break;
 
-                        yield return new WaitForSeconds(delay);
+                                yield return new WaitForSeconds(delay); // THIS CAUSES PROBLEMS when the delay is smaller than the deltatime. 1 bathtub per frame, min.
+                            }
+                        }
                     }
-
-                    if (_spawnedBathtubs.Count >= endAmount)
-                        yield break;
-
-                    yield return null;
                 }
                 yield return null;
             }
-            yield return null;
+
+            // too many bathtubs => despawn
+            else
+            {
+                // find out which layer to start from (get lastly added bathtub's layer, which gives the top layer), so we can avoid iterating from the very very top.
+                int startLayer = 0;
+                if(_positionHistory.Count >= 1)
+                    startLayer = _positionHistory[_positionHistory.Count - 1].y;
+
+                // start at the buttom layer, move through that grid, then move a layer up and repeat.
+                for (y = startLayer; y >= 0; y--)
+                {
+                    // iterate through the grid incrementally, row per row
+                    for (z = _amountPerLayerZ - 1; z >= 0; z--)
+                    {
+                        // remove the tubs from the sides to the center
+                        for (x = _amountPerLayerX / 2; x >= 1 / 2; x--)
+                        {
+                            GridPosition gridPosLeft = new GridPosition
+                            {
+                                x = -x,
+                                y = y,
+                                z = z,
+                            };
+
+                            GridPosition gridPosRight = new GridPosition
+                            {
+                                x = x,
+                                y = y,
+                                z = z,
+                            };
+
+                            // remove left side first
+                            if (TryDespawnBathtubAt(gridPosLeft))
+                            {
+                                // we removed enough bathtubs, stop this sorcery!!
+                                if (_spawnedBathtubs.Count <= endAmount)
+                                    yield break;
+
+                                // remove right side
+                                TryDespawnBathtubAt(gridPosRight);
+
+                                // we removed enough bathtubs, stop this sorcery!!
+                                if (_spawnedBathtubs.Count <= endAmount)
+                                    yield break;
+
+                                yield return new WaitForSeconds(delay);
+                            }
+                        }
+                    }
+                }
+                yield return null;
+            }
         }
 
 
@@ -221,6 +207,9 @@ namespace Change
                 bathtubGO.transform.parent = this.transform;
                 _spawnedBathtubs.Add(gridPos, bathtubGO);
 
+                // memorize the last added position
+                _positionHistory.Add(gridPos);
+
                 return true;
             }
             return false;
@@ -229,15 +218,16 @@ namespace Change
 
         private bool TryDespawnBathtubAt(GridPosition gridPos)
         {
-            if (!_spawnedBathtubs.ContainsKey(gridPos))
+            if (_spawnedBathtubs.ContainsKey(gridPos))
             {
                 GameObject bathTub = _spawnedBathtubs[gridPos];
 
                 
                 if (bathTub != null)
                 {
-                    // remove the reference from our dictionary
+                    // remove the reference from our dictionary and history
                     _spawnedBathtubs.Remove(gridPos);
+                    _positionHistory.Remove(gridPos);
 
                     // kill it
                     Destroy(bathTub.gameObject);
