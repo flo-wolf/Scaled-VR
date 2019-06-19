@@ -11,7 +11,6 @@ namespace Change
 
         private SteamVR_Behaviour_Pose m_Pose = null;
         private FixedJoint m_Joint = null;
-        private SpringJoint m_JointSpring = null;
 
         [SerializeField] private Interactable m_CurrentInteractable = null;
         [SerializeField] private List<Interactable> m_ContectInteractables = new List<Interactable>();
