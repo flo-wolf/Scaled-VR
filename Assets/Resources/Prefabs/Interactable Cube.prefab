@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2009648152884147302}
   - component: {fileID: 2009648152884147303}
   - component: {fileID: 2009648152884147296}
-  - component: {fileID: 2009648152884147297}
+  - component: {fileID: 1353662031089133891}
   m_Layer: 0
   m_Name: Interactable Cube
   m_TagString: Interactable
@@ -109,7 +109,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2009648152884147297
+--- !u!114 &1353662031089133891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2009648152884147298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e95c00b3e8966a64a822a9880e092515, type: 3}
+  m_Script: {fileID: 11500000, guid: 088631c8f9ab782499933798ecb1a415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
+  emission:
+    waterConsumption: 3
+    gasConsumption: 3
