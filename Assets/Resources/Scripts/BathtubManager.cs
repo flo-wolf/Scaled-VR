@@ -18,6 +18,7 @@ namespace Change
         [SerializeField] private GameObject _bathtubPB;         // prefab reference
 
         [Header("Spawning")]
+        [SerializeField] private float _spawnDelay = 0.1f;      // time between spawning two bathtubs
         [SerializeField] private int _amountPerLayerX = 10;     // how many bathtubs in a row
         [SerializeField] private int _amountPerLayerZ = 10;     // how many bathtubs in a column
         [SerializeField] private float _stepX = 2f;             // x distance between bathtubs
@@ -30,7 +31,7 @@ namespace Change
 
         private Dictionary<GridPosition, GameObject> _spawnedBathtubs = new Dictionary<GridPosition, GameObject>();
         private int _AmountPerLayer { get { return _amountPerLayerX * _amountPerLayerZ; } }
-
+        private Coroutine currentUpdateCoroutine = null;
 
         // grid iteration variables
         private int _x = 0;
@@ -52,6 +53,14 @@ namespace Change
         }
 
         private void UpdateBathtubs(int endAmount)
+        {
+            if (currentUpdateCoroutine != null)
+                StopCoroutine(currentUpdateCoroutine);
+
+            StartCoroutine(C_UpdateBathtubs(endAmount, _spawnDelay));
+        }
+
+        private void UpdateBathtubsOld(int endAmount)
         {
             Debug.Log("Update Bathtubs to: " + endAmount);
             // testing, remove to allow multiple layers
@@ -136,6 +145,45 @@ namespace Change
                 _z = z;
                 _x = x;
             }
+        }
+
+
+        IEnumerator C_UpdateBathtubs(int endAmount, float delay)
+        {
+
+            int layer = 0;
+            int z = 0;
+            int x = 0;
+
+            // iterate through the grid incrementally, row per row, and add tubs
+            for (z = 0; z < _amountPerLayerZ; z++)
+            {
+
+                for (x = 0; x < _amountPerLayerX; x++)
+                {
+                    GridPosition gridPos = new GridPosition
+                    {
+                        x = x,
+                        z = z,
+                        layer = layer
+                    };
+
+                    if (!_spawnedBathtubs.ContainsKey(gridPos))
+                    {
+                        Vector3 spawnPos = new Vector3(_stepX * x + _offsetX, _spawnHeight, transform.position.z + _stepZ * z);
+                        GameObject bathtubGO = Instantiate(_bathtubPB, spawnPos, Quaternion.identity);
+                        bathtubGO.transform.parent = this.transform;
+                        _spawnedBathtubs.Add(gridPos, bathtubGO);
+                    }
+
+                    // we spanwed enough bathtubs, stop this sorcery!!
+                    if (_spawnedBathtubs.Count >= endAmount)
+                        goto End;
+                }
+            }
+
+
+            yield return null;
         }
     }
 }
