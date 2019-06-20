@@ -13,12 +13,14 @@ namespace Change
         {
             public float waterConsumption; // { get; private set; }
             public float gasConsumption;
+            public float areaConsumption;
         }
 
         public Emission emission = new Emission
         {
             waterConsumption = 1f,
-            gasConsumption = 1f
+            gasConsumption = 1f,
+            areaConsumption = 1f
         };
 
         // Start is called before the first frame update
