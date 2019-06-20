@@ -23,7 +23,8 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
-            Vector4 bounds = new Vector4(emission.areaConsumption, emission.areaConsumption, emission.areaConsumption, emission.areaConsumption);
+            float squaredArea = Mathf.Sqrt(emission.areaConsumption) / 2;
+            Vector4 bounds = new Vector4(squaredArea, squaredArea, squaredArea, squaredArea);
 
             if(_scaleCoroutine != null)
             {
