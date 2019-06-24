@@ -12,8 +12,8 @@ namespace Change
         public struct Emission
         {
             public float waterConsumption; // { get; private set; }
-            public float gasConsumption;
-            public float areaConsumption;
+            public float gasConsumption;   // gas weight
+            public float areaConsumption;  // sqr meters
         }
 
         public Emission emission = new Emission
