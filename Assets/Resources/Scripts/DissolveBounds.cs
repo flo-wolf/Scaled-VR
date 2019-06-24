@@ -6,6 +6,8 @@ namespace Change
 {
     public class DissolveBounds : MonoBehaviour
     {
+        public static float FixedWidth { get; } = 8f;
+
         public Material material;
 
         [Header("Scaling")]
@@ -28,8 +30,8 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
-            float squaredArea = Mathf.Sqrt(emission.areaConsumption) / 2;
-            Vector4 bounds = new Vector4(squaredArea, squaredArea, squaredArea, squaredArea);
+            float sideLength = emission.areaConsumption / FixedWidth;
+            Vector4 bounds = new Vector4(sideLength, sideLength, sideLength, sideLength);
 
             if(_scaleCoroutine != null)
             {
@@ -68,8 +70,8 @@ namespace Change
 
         private void SetBounds(Vector4 bounds)
         {
-            Plane planeRight = new Plane(Vector3.right, transform.position);
-            Plane planeFront = new Plane(Vector3.forward, transform.position);
+            Plane planeRight = new Plane(transform.right, transform.position);
+            Plane planeFront = new Plane(transform.forward, transform.position);
 
             Vector4 planeRightVector;
             Vector4 planeLeftVector;
