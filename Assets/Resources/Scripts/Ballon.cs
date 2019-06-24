@@ -6,6 +6,8 @@ namespace Change
 {
     public class Ballon : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private Rigidbody _rb;
 
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 3f;
@@ -16,15 +18,13 @@ namespace Change
         [SerializeField] private float _minUpdraftWeight = 0f;
         [SerializeField] private float _maxUpdraftWeight = 40f;
 
-
-        private Rigidbody _rb;
+       
         private Coroutine _scaleCoroutine = null;
         private float _currentWeight = 0f;
 
 
         void Start()
         {
-            _rb = GetComponent<Rigidbody>();
 
             SetScale(0);
             Scale.onScaleEvent.AddListener(OnScaleEvent);
