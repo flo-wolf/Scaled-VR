@@ -7,7 +7,7 @@ namespace Change
     public class Ballon : MonoBehaviour
     {
 
-        [Header("Timing")]
+        [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 3f;
 
         [Header("Updraft")]
