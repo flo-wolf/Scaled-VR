@@ -83,7 +83,7 @@
             o.Albedo = c.rgb + (pow(rim, 2) * _RimColor * _LightColor0.rgb);
             o.Smoothness = _Glossiness;
 			o.Emission = lines * _GlowColor;
-            //o.Alpha = c.a;
+        
         }
         ENDCG
     }
