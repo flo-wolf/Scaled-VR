@@ -28,20 +28,28 @@ namespace Change
             Scale.onScaleEvent.AddListener(OnScaleEvent);
         }
 
-
+        // something was put onto or removed from the scale. Emissions have changed. This event is fired by the scale. All objects can subscribe (listen) to it.
         private void OnScaleEvent(Food.Emission emission)
         {
+            // disable the line when there is nothing on the scale causing area consumption.
+            if (emission.areaSqrMeters == 0)
+            {
+                _line.enabled = false;
+                return;
+            }
+            _line.enabled = true;
+
             // calc new points based on emission
-            float sideLength = emission.areaSqrMeters / DissolveBounds.FixedWidth;
+            float sideLength = emission.areaSqrMeters / DissolveArea.FixedWidth;
 
             Vector3[] newPoints = _currentPoints;
             // 3rd point (far left)
             newPoints[2] = _startPoints[1];
-            newPoints[2].z = newPoints[2].z + sideLength;
+            newPoints[2].x = newPoints[2].x - sideLength;
 
             // 4rd point (far right)
             newPoints[3] = _startPoints[0];
-            newPoints[3].z = newPoints[3].z + sideLength;
+            newPoints[3].x = newPoints[3].x - sideLength;
 
             if (_scaleCoroutine != null)
             {

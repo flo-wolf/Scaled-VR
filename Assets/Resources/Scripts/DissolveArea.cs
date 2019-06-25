@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Change
 {
-    public class DissolveBounds : MonoBehaviour
+    public class DissolveArea : MonoBehaviour
     {
-        public static float FixedWidth { get; } = 8f;
+        public static float FixedWidth { get; } = 10f;
 
         public Material material;
 
@@ -31,7 +31,7 @@ namespace Change
         private void OnScaleEvent(Food.Emission emission)
         {
             float sideLength = emission.areaSqrMeters / FixedWidth;
-            Vector4 bounds = new Vector4(sideLength, sideLength, sideLength, sideLength);
+            Vector4 bounds = new Vector4(sideLength + _offsetBounds.x, sideLength + _offsetBounds.y, FixedWidth + _offsetBounds.z, sideLength + _offsetBounds.w);
 
             if(_scaleCoroutine != null)
             {
@@ -80,25 +80,25 @@ namespace Change
 
             // x
             //if (_fixedBounds.x != 0)
-                planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.x + _offsetBounds.x);
+                planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.x);
            // else
            //    planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.x + _offsetBounds.x);
 
             // y
            // if (_fixedBounds.y != 0)
-                planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.y + _offsetBounds.y);
+                planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.y);
            // else
            //     planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.y + _offsetBounds.y);
 
             // z
            // if (_fixedBounds.z != 0)
-                planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + bounds.z + _offsetBounds.z);
+                planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + bounds.z);
            // else
            //     planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + _fixedBounds.z + _offsetBounds.z);
 
             // w
            // if (_fixedBounds.w != 0)
-                planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + bounds.w + _offsetBounds.w);
+                planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + bounds.w);
            // else
            //     planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + _fixedBounds.w + _offsetBounds.w);
 
