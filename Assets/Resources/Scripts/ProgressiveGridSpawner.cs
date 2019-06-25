@@ -228,8 +228,27 @@ namespace Change
                                 if (_spawnedObjects.Count <= endAmount)
                                     yield break;
 
-                                if(!_instantDespawn)
-                                    yield return new WaitForSeconds(fixedDelay);
+                                if (!_instantDespawn)
+                                {
+                                    // allow for more than one bathtub to spawn per frame when the delay is really low
+                                    if (Time.deltaTime > delayDelta)
+                                    {
+                                        delayDelta += Time.deltaTime;
+                                        lastFrameDelayed = true;
+                                        //if (delayDelta <= 0)
+                                        //    delayDelta = fixedDelay;
+                                    }
+                                    else
+                                    {
+                                        if (lastFrameDelayed)
+                                            delayDelta -= Time.deltaTime;
+                                        yield return new WaitForSeconds(delayDelta); // THIS CAUSES PROBLEMS when the delay is smaller than the deltatime. 1 bathtub per frame, min.
+                                    }
+
+                                    //yield return new WaitForSeconds(fixedDelay);
+                                }
+
+                                   
                             }
                         }
                     }
@@ -281,7 +300,10 @@ namespace Change
                     _positionHistory.Remove(gridPos);
 
                     // kill it
-                    Destroy(go.gameObject);
+                    Bathtub tub = go.GetComponent<Bathtub>();
+                    if (tub != null)
+                        tub.FadeOut();
+                    //Destroy(go.gameObject);
 
                     return true;
                 }

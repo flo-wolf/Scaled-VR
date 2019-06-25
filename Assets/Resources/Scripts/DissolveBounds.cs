@@ -30,7 +30,7 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
-            float sideLength = emission.areaConsumption / FixedWidth;
+            float sideLength = (emission.areaConsumption / FixedWidth) / 2;
             Vector4 bounds = new Vector4(sideLength, sideLength, sideLength, sideLength);
 
             if(_scaleCoroutine != null)
@@ -41,6 +41,8 @@ namespace Change
 
             _scaleCoroutine = StartCoroutine(C_ScaleBounds(bounds, _scaleDuration));
         }
+
+
 
         IEnumerator C_ScaleBounds(Vector4 endBounds, float duration)
         {
@@ -63,10 +65,10 @@ namespace Change
             yield return null;
         }
 
-        //private void Update()
-        //{
-        //    SetBounds(_bounds);
-        //}
+        private void Update()
+        {
+            SetBounds(_bounds);
+        }
 
         private void SetBounds(Vector4 bounds)
         {

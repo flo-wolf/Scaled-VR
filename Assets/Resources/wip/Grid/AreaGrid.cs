@@ -37,11 +37,11 @@ namespace Change
             Vector3[] newPoints = _currentPoints;
             // 3rd point (far left)
             newPoints[2] = _startPoints[1];
-            newPoints[2].z = newPoints[2].z + sideLength;
+            newPoints[2].x = newPoints[2].x - sideLength;
 
             // 4rd point (far right)
             newPoints[3] = _startPoints[0];
-            newPoints[3].z = newPoints[3].z + sideLength;
+            newPoints[3].x = newPoints[3].x  - sideLength;
 
             if (_scaleCoroutine != null)
             {
@@ -57,6 +57,8 @@ namespace Change
             float t = 0f;
             float lerpT = 0f;
             Vector3[] startPoints = _currentPoints;
+
+            Debug.Log("StartPoints[2] " + startPoints[1] + " endPoints[2]" + endPoints[2]);
 
             while (t < duration)
             {
@@ -85,17 +87,11 @@ namespace Change
 
         private void SetPoints(Vector3[] points)
         {
+            Debug.Log("Area Setpoints: " + Time.time + "points: " + points[3]);
             _line.SetPosition(0, points[0]);
             _line.SetPosition(1, points[1]);
             _line.SetPosition(2, points[2]);
             _line.SetPosition(3, points[3]);
-        }
-
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 

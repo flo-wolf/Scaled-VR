@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12fc4fc61b0d9a24ab72357b6be56873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scaleDuration: 2
+  _scaleDuration: 10
   _startPoints:
-  - {x: 1.5, y: 0, z: 0}
-  - {x: -1.5, y: 0, z: 0}
-  - {x: -1.5, y: 0, z: -1}
-  - {x: 1.5, y: 0, z: -1}
+  - {x: 0, y: 0, z: 4}
+  - {x: 0, y: 0, z: -4}
+  - {x: 0, y: 0, z: -4}
+  - {x: 0, y: 0, z: 4}
 --- !u!120 &4600276257654059895
 LineRenderer:
   m_ObjectHideFlags: 0
