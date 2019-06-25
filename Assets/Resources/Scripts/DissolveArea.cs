@@ -7,39 +7,70 @@ namespace Change
     public class DissolveArea : MonoBehaviour
     {
         public static float FixedWidth { get; } = 10f;
+        public enum Side { Right, Left, Front, Back }
 
+        [Header("Target")]
         public Material material;
 
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 1f;
-        [SerializeField] private Vector4 _offsetBounds = Vector4.zero;
+        public Side sideToScale = Side.Left;
+        //[SerializeField] private Vector4 _offsetBounds = Vector4.zero;
         [SerializeField] private Vector4 _fixedBounds = Vector4.zero;
 
         [Header("Debugging")]
-        [SerializeField] private Vector4 _bounds = Vector4.zero;
+        [SerializeField] private Vector4 _bounds = Vector4.zero; // "strech" of the sides of a horizontal plane centering in transform.position into the four directions
+        // right, left, front, back
 
         private Coroutine _scaleCoroutine = null;
+
+
 
         // Start is called before the first frame update
         void Start()
         {
             Scale.onScaleEvent.AddListener(OnScaleEvent);
 
+            // set starting bounds
+            if(sideToScale == Side.Right || sideToScale == Side.Left)
+                _bounds = new Vector4(0, 0, FixedWidth, FixedWidth); // set front and back of the area plane (width of the area)
+            else // front back
+                _bounds = new Vector4(FixedWidth, FixedWidth, 0, 0); // set front and back of the area plane (width of the area)
+
+            _bounds = new Vector4(0, 0, FixedWidth, FixedWidth); // set front and back of the area plane (width of the area)
             SetBounds(_bounds);
         }
 
         private void OnScaleEvent(Food.Emission emission)
         {
             float sideLength = emission.areaSqrMeters / FixedWidth;
-            Vector4 bounds = new Vector4(sideLength + _offsetBounds.x, sideLength + _offsetBounds.y, FixedWidth + _offsetBounds.z, sideLength + _offsetBounds.w);
 
-            if(_scaleCoroutine != null)
+            // old: Vector4 nextBounds = new Vector4(sideLength + _offsetBounds.x, 0, FixedWidth + _offsetBounds.z, FixedWidth + _offsetBounds.w);
+            Vector4 nextBounds = _bounds;
+
+            switch (sideToScale)
+            {
+                case Side.Right:
+                    nextBounds = new Vector4(0, sideLength, FixedWidth, FixedWidth);
+                    break;
+                case Side.Left:
+                    nextBounds = new Vector4(sideLength, 0, FixedWidth, FixedWidth);
+                    break;
+                case Side.Front:
+                    nextBounds = new Vector4(FixedWidth, FixedWidth, FixedWidth, FixedWidth);
+                    break;
+                case Side.Back:
+                    nextBounds = new Vector4(FixedWidth, FixedWidth, FixedWidth, FixedWidth);
+                    break;
+            }
+
+            if (_scaleCoroutine != null)
             {
                 StopCoroutine(_scaleCoroutine);
                 _scaleCoroutine = null;
             }
 
-            _scaleCoroutine = StartCoroutine(C_ScaleBounds(bounds, _scaleDuration));
+            _scaleCoroutine = StartCoroutine(C_ScaleBounds(nextBounds, _scaleDuration));
         }
 
         IEnumerator C_ScaleBounds(Vector4 endBounds, float duration)
@@ -56,17 +87,12 @@ namespace Change
 
                 _bounds = Vector4.Lerp(startBounds, endBounds, lerpT);
 
-                SetBounds(_bounds * 4);
+                SetBounds(_bounds);
 
                 yield return null;
             }
             yield return null;
         }
-
-        //private void Update()
-        //{
-        //    SetBounds(_bounds);
-        //}
 
         private void SetBounds(Vector4 bounds)
         {
@@ -77,30 +103,31 @@ namespace Change
             Vector4 planeLeftVector;
             Vector4 planeFrontVector;
             Vector4 planeBackVector;
+            Debug.Log("Fixedbounds.x: " + _fixedBounds.x);
 
             // x
-            //if (_fixedBounds.x != 0)
+            if (_fixedBounds.x == 0)
                 planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.x);
-           // else
-           //    planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.x + _offsetBounds.x);
+           else
+               planeRightVector = new Vector4(planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.x);
 
             // y
-           // if (_fixedBounds.y != 0)
+           if (_fixedBounds.y == 0)
                 planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + bounds.y);
-           // else
-           //     planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.y + _offsetBounds.y);
+           else
+                planeLeftVector = new Vector4(-planeRight.normal.x, planeRight.normal.y, planeRight.normal.z, planeRight.distance + _fixedBounds.y);
 
             // z
-           // if (_fixedBounds.z != 0)
+           if (_fixedBounds.z == 0)
                 planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + bounds.z);
-           // else
-           //     planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + _fixedBounds.z + _offsetBounds.z);
+           else
+                planeFrontVector = new Vector4(planeFront.normal.x, planeFront.normal.y, planeFront.normal.z, planeFront.distance + _fixedBounds.z);
 
             // w
-           // if (_fixedBounds.w != 0)
+           if (_fixedBounds.w == 0)
                 planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + bounds.w);
-           // else
-           //     planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + _fixedBounds.w + _offsetBounds.w);
+           else
+                planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + _fixedBounds.w);
 
 
             material.SetVector("_PlaneRight", planeRightVector);
@@ -108,6 +135,12 @@ namespace Change
             material.SetVector("_PlaneFront", planeFrontVector);
             material.SetVector("_PlaneBack", planeBackVector);
         }
+
+        //private void Update()
+        //{
+        //    SetBounds(_bounds);
+        //}
+
     }
 }
 
