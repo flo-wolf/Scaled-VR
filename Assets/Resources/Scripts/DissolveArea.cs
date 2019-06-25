@@ -14,8 +14,7 @@ namespace Change
 
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 1f;
-        public Side sideToScale = Side.Left;
-        //[SerializeField] private Vector4 _offsetBounds = Vector4.zero;
+        [SerializeField] private Side sideToScale = Side.Left;
         [SerializeField] private Vector4 _fixedBounds = Vector4.zero;
 
         [Header("Debugging")]

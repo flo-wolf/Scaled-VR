@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// outline around the area needed to produce the food on the scale.
+
 namespace Change
 {
     public class AreaGrid : MonoBehaviour
@@ -10,6 +12,7 @@ namespace Change
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 2f;
         [SerializeField] private Vector3[] _startPoints;
+
 
         private LineRenderer _line;
         private Coroutine _scaleCoroutine = null;
@@ -21,7 +24,8 @@ namespace Change
             _line = GetComponent<LineRenderer>();
             _line.enabled = true;
 
-            _currentPoints = _startPoints;
+            _currentPoints = new Vector3[4];
+            _startPoints.CopyTo(_currentPoints, 0);
 
             SetPoints(_startPoints);
 
@@ -31,26 +35,31 @@ namespace Change
         // something was put onto or removed from the scale. Emissions have changed. This event is fired by the scale. All objects can subscribe (listen) to it.
         private void OnScaleEvent(Food.Emission emission)
         {
+            // calc the sidelength of our strip of grass that we try to outline.
+            float sideLength = emission.areaSqrMeters / DissolveArea.FixedWidth;
+
             // disable the line when there is nothing on the scale causing area consumption.
-            if (emission.areaSqrMeters == 0)
+            if (sideLength == 0)
             {
                 _line.enabled = false;
                 return;
             }
-            _line.enabled = true;
+            if (!_line.enabled)
+                _line.enabled = true;
 
-            // calc new points based on emission
-            float sideLength = emission.areaSqrMeters / DissolveArea.FixedWidth;
 
-            Vector3[] newPoints = _currentPoints;
+            // calc new points based on area sidelength calculated by the square meter emission data
+            Vector3[] newPoints = new Vector3[4];
+            _currentPoints.CopyTo(newPoints, 0);
+
             // 3rd point (far left)
-            newPoints[2] = _startPoints[1];
-            newPoints[2].x = newPoints[2].x - sideLength;
+            newPoints[2].x = _startPoints[2].x - sideLength;
 
             // 4rd point (far right)
-            newPoints[3] = _startPoints[0];
-            newPoints[3].x = newPoints[3].x - sideLength;
+            newPoints[3].x = _startPoints[3].x - sideLength;
 
+
+            // start scaling the line renderer
             if (_scaleCoroutine != null)
             {
                 StopCoroutine(_scaleCoroutine);
@@ -64,7 +73,9 @@ namespace Change
         {
             float t = 0f;
             float lerpT = 0f;
-            Vector3[] startPoints = _currentPoints;
+
+            Vector3[] startPoints = new Vector3[4];
+            _currentPoints.CopyTo(startPoints, 0);
 
             while (t < duration)
             {
@@ -98,13 +109,5 @@ namespace Change
             _line.SetPosition(2, points[2]);
             _line.SetPosition(3, points[3]);
         }
-
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
-
 }
