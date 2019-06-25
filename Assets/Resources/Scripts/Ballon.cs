@@ -38,7 +38,7 @@ namespace Change
                 _scaleCoroutine = null;
             }
 
-            _scaleCoroutine = StartCoroutine(C_Scale(emission.gasConsumption, _scaleDuration));
+            _scaleCoroutine = StartCoroutine(C_Scale(emission.gasGrams, _scaleDuration));
         }
 
         IEnumerator C_Scale(float endWeight, float duration)
@@ -63,19 +63,19 @@ namespace Change
         private void SetScale(float gasWeight)
         {
             // size
-            float d = Mathf.Pow(6 * (0.51f * Mathf.Abs(gasWeight)) / 3.14f, 0.333f);     // 6 * (Volumen von Co2 in Liter * Gewicht) / Pi  und davon dann über Mathf.Pow die Potenz von 1/3 
+            float d = Mathf.Pow(6 * (0.51f * Mathf.Abs(gasWeight)) / 3.14f, 0.333f);     // 6 * (Volumen von Co2 in Liter * Gewicht) / Pi  und davon dann über Mathf.Pow die Potenz von 1/3  ????
             transform.localScale = new Vector3(d, d, d);
         }
 
         private void Update()
         {
             // uplift
-            _rb.AddForce(Vector3.up * CalcUpdraft(_currentWeight));
+            _rb.AddForce(Vector3.up * CalcUpdraft(_currentWeight), ForceMode.Acceleration);
         }
 
         private float CalcUpdraft(float gasWeight)
         {
-            return gasWeight.Remap(_minUpdraftWeight, _maxUpdraftWeight, _minUpdraft, _maxUpdraft);
+            return Mathf.Clamp(gasWeight.Remap(_minUpdraftWeight, _maxUpdraftWeight, _minUpdraft, _maxUpdraft), _minUpdraft, _maxUpdraft);
         }
     }
 }

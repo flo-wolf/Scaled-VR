@@ -45,28 +45,32 @@ namespace Change
 
         private void UpdateEmissions()
         {
-            float startWater = m_Emission.waterConsumption;
-            float startGas = m_Emission.gasConsumption;
-            float startArea = m_Emission.areaConsumption;
+            float startWater = m_Emission.waterLiters;
+            float startGas = m_Emission.gasGrams;
+            float startArea = m_Emission.areaSqrMeters;
+            float startKcal = m_Emission.kcal;
 
             float water = 0f;
             float gas = 0f;
             float area = 0f;
+            float kcal = 0f;
 
             foreach(Food f in _connectedFood)
             {
-                water += f.emission.waterConsumption;
-                gas += f.emission.gasConsumption;
-                area += f.emission.areaConsumption;
+                water += f.emission.waterLiters;
+                gas += f.emission.gasGrams;
+                area += f.emission.areaSqrMeters;
+                kcal += f.emission.kcal;
 
             }
 
             // emissions have changed
-            if(water != startWater || gas != startGas || area != startArea)
+            if(water != startWater || gas != startGas || area != startArea || kcal != startKcal)
             {
-                m_Emission.waterConsumption = water;
-                m_Emission.gasConsumption = gas;
-                m_Emission.areaConsumption = area;
+                m_Emission.waterLiters = water;
+                m_Emission.gasGrams = gas;
+                m_Emission.areaSqrMeters = area;
+                m_Emission.kcal = kcal;
 
                 // fire the event, passing the updated emissions
                 onScaleEvent.Invoke(m_Emission);

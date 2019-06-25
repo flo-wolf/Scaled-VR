@@ -57,8 +57,8 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
-            Debug.Log("Scale Event Registered - emissions: water: " + emission.waterConsumption + " gas: " + emission.gasConsumption);
-            int bathtubAmount = (int) emission.waterConsumption;
+            Debug.Log("Scale Event Registered - emissions: water: " + emission.waterLiters + " gas: " + emission.gasGrams);
+            int bathtubAmount = (int) Mathf.Ceil((emission.waterLiters / 150f));
             UpdateGrid(bathtubAmount);
         }
 

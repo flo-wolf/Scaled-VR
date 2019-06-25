@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+
 namespace Change
 {
 
@@ -32,21 +34,21 @@ namespace Change
             switch (infotype)
             {
                 case Infotype.water:
-                    newValue = emission.waterConsumption;
-                    Debug.Log("Water" + emission.waterConsumption);
+                    newValue = emission.waterLiters;
+                    Debug.Log("Water" + emission.waterLiters);
                     break;
 
 
                 case Infotype.ground:
-                    newValue = emission.areaConsumption;
+                    newValue = emission.areaSqrMeters;
                     break;
 
                 case Infotype.gas:
-                    newValue = emission.gasConsumption;
+                    newValue = emission.gasGrams;
                     break;
 
                 case Infotype.calories:
-                    newValue = emission.waterConsumption;
+                    newValue = emission.waterLiters;
                     break;
 
                 default:
@@ -76,7 +78,7 @@ namespace Change
                 lerpT = Mathf.SmoothStep(0, 1, t / duration);
 
                 value = Mathf.Lerp(currentValue, newValue, lerpT);
-                screentext.text = value + "";
+                screentext.text = String.Format("{0:#,0}", (int)value) + " liters";
 
                 yield return null;
             }

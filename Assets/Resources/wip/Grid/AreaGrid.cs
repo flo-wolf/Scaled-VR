@@ -32,7 +32,7 @@ namespace Change
         private void OnScaleEvent(Food.Emission emission)
         {
             // calc new points based on emission
-            float sideLength = emission.areaConsumption / DissolveBounds.FixedWidth;
+            float sideLength = emission.areaSqrMeters / DissolveBounds.FixedWidth;
 
             Vector3[] newPoints = _currentPoints;
             // 3rd point (far left)

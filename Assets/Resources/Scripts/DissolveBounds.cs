@@ -30,7 +30,7 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
-            float sideLength = emission.areaConsumption / FixedWidth;
+            float sideLength = emission.areaSqrMeters / FixedWidth;
             Vector4 bounds = new Vector4(sideLength, sideLength, sideLength, sideLength);
 
             if(_scaleCoroutine != null)

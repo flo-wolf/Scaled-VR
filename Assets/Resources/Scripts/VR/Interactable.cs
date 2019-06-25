@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Change
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class Interactable : MonoBehaviour
+    public abstract class Interactable : MonoBehaviour
     {
 
         [HideInInspector]

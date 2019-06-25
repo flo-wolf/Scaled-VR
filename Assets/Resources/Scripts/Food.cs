@@ -11,28 +11,18 @@ namespace Change
         [Serializable]
         public struct Emission
         {
-            public float waterConsumption; // { get; private set; }
-            public float gasConsumption;   // gas weight
-            public float areaConsumption;  // sqr meters
+            public float waterLiters; // { get; private set; }
+            public float gasGrams;   // gas weight
+            public float areaSqrMeters;  // sqr meters
+            public float kcal; // kilo calories
         }
 
         public Emission emission = new Emission
         {
-            waterConsumption = 1f,
-            gasConsumption = 1f,
-            areaConsumption = 1f
+            waterLiters = 1000f,
+            gasGrams = 1000f,
+            areaSqrMeters = 10f,
+            kcal = 1000f,
         };
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
