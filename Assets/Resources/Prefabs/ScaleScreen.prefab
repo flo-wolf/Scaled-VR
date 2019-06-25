@@ -307,9 +307,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2504455881648466824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cade3797d91ea4a25a967f3052b5cf82, type: 3}
+  m_Script: {fileID: 11500000, guid: dbbe186110deb764e92e74f226dca76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   infotype: 0
-  _countDuration: 0.5
-  screentext: {fileID: 0}
+  _countDuration: 1
+  screentext: {fileID: 2504455880671281127}

@@ -14,7 +14,8 @@ public class Bathtub : MonoBehaviour
 
     public void FadeOut()
     {
-        animator.Play("bathtub_fade-out");
+        animator.SetTrigger("fade-out");
+        //animator.Play("bathtub_fade-out");
     }
 
     public void Kill()

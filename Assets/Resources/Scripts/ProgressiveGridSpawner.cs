@@ -281,7 +281,12 @@ namespace Change
                     _positionHistory.Remove(gridPos);
 
                     // kill it
-                    Destroy(go.gameObject);
+                    Bathtub tub = go.GetComponent<Bathtub>();
+                    if(tub != null)
+                    {
+                        tub.FadeOut();
+                    }
+                    //Destroy(go.gameObject);
 
                     return true;
                 }

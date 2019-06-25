@@ -123,5 +123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterConsumption: 3
-    gasConsumption: 3
+    waterConsumption: 100
+    gasConsumption: 100
+    areaConsumption: 100
