@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Bathtub : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Animator animator;
+
+
     void Start()
     {
-        
+        //animator.SetTrigger("fade-in");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FadeOut()
     {
-        
+        animator.Play("bathtub_fade-out");
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
     }
 }
