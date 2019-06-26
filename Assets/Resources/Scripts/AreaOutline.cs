@@ -17,12 +17,13 @@ namespace Change
         private LineRenderer _line;
         private Coroutine _scaleCoroutine = null;
         private Vector3[] _currentPoints;
+        private float _sideLength = 0f;
 
 
         void Start()
         {
             _line = GetComponent<LineRenderer>();
-            _line.enabled = true;
+            //_line.enabled = true;
 
             _currentPoints = new Vector3[4];
             _startPoints.CopyTo(_currentPoints, 0);
@@ -36,16 +37,10 @@ namespace Change
         private void OnScaleEvent(Food.Emission emission)
         {
             // calc the sidelength of our strip of grass that we try to outline.
-            float sideLength = emission.areaSqrMeters / DissolveArea.FixedWidth;
+            _sideLength = emission.areaSqrMeters / DissolveArea.FixedWidth;
 
             // disable the line when there is nothing on the scale causing area consumption.
-            if (sideLength == 0)
-            {
-                _line.enabled = false;
-                return;
-            }
-            if (!_line.enabled)
-                _line.enabled = true;
+            
 
 
             // calc new points based on area sidelength calculated by the square meter emission data
@@ -53,10 +48,10 @@ namespace Change
             _currentPoints.CopyTo(newPoints, 0);
 
             // 3rd point (far left)
-            newPoints[2].x = _startPoints[2].x - sideLength;
+            newPoints[2].x = _startPoints[2].x - _sideLength;
 
             // 4rd point (far right)
-            newPoints[3].x = _startPoints[3].x - sideLength;
+            newPoints[3].x = _startPoints[3].x - _sideLength;
 
 
             // start scaling the line renderer
@@ -71,6 +66,9 @@ namespace Change
 
         IEnumerator C_ScaleGrid(Vector3[] endPoints, float duration)
         {
+            if (!_line.enabled)
+                _line.enabled = true;
+
             float t = 0f;
             float lerpT = 0f;
 
@@ -94,6 +92,14 @@ namespace Change
 
                 yield return null;
             }
+
+            if (_sideLength == 0)
+            {
+                _line.enabled = false;
+            }
+            else if (!_line.enabled)
+                _line.enabled = true;
+
             yield return null;
         }
 

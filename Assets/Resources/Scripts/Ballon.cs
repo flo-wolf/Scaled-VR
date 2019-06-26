@@ -27,7 +27,7 @@ namespace Change
         void Start()
         {
 
-            SetScale(0.01f);
+            SetScale(_minSize);
             Scale.onScaleEvent.AddListener(OnScaleEvent);
         }
 
@@ -57,14 +57,21 @@ namespace Change
 
                 yield return null;
             }
+
             yield return null;
         }
 
 
         private void SetScale(float gasWeight)
         {
-            // size
-            float d = Mathf.Pow(6 * (0.51f * Mathf.Abs(gasWeight)) / 3.14f, 0.333f);     // 6 * (Volumen von Co2 in Liter * Gewicht) / Pi  und davon dann über Mathf.Pow die Potenz von 1/3  ????
+            float sqrMeterVolume = gasWeight * 0.001836f; // 1.836 kilogram [kg] of Carbon dioxide fits into 1 cubic meter
+
+            float d = Mathf.Pow(6 * (0.51f * Mathf.Abs(sqrMeterVolume)) / 3.14f, 0.333f);     // 6 * (Volumen von Co2 in Liter * Gewicht) / Pi  und davon dann über Mathf.Pow die Potenz von 1/3  ????
+            
+            // other attempts:
+            //float d = Mathf.Pow(Mathf.PI, 2 / 3) * Mathf.Pow((6 * (sqrMeterVolume)), 1 / 3);    // diameter = π^2/3 (6v)^1/3 , where v is the volume in m^2
+            //float d = sqrMeterVolume / Mathf.PI;
+
             d = Mathf.Clamp(d, _minSize, Mathf.Infinity);
             transform.localScale = new Vector3(d, d, d);
         }

@@ -17,6 +17,7 @@ public class CableComponent : MonoBehaviour
 	[SerializeField] private float segmentsPerUnit = 2f;
 	private int segments = 0;
 	[SerializeField] private float cableWidth = 0.1f;
+	[SerializeField] private float minDrawDistance= 0.1f;
 
     // Solver config
     [Header("Solver")]
@@ -114,6 +115,11 @@ public class CableComponent : MonoBehaviour
 	 */
 	void RenderCable()
 	{
+        if ((endPoint.position - transform.position).sqrMagnitude <= minDrawDistance * minDrawDistance)
+            line.enabled = false;
+        else if (!line.enabled)
+            line.enabled = true;
+
 		for (int pointIdx = 0; pointIdx < segments + 1; pointIdx++) 
 		{
 			line.SetPosition(pointIdx, points [pointIdx].Position);
