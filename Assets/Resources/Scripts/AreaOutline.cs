@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Change
 {
-    public class AreaGrid : MonoBehaviour
+    public class AreaOutline : MonoBehaviour
     {
 
         [Header("Scaling")]

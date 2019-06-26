@@ -11,6 +11,7 @@ namespace Change
 
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 3f;
+        [SerializeField] private float _minSize = 0.1f;
 
         [Header("Updraft")]
         [SerializeField] private float _minUpdraft = 8f;
@@ -26,7 +27,7 @@ namespace Change
         void Start()
         {
 
-            SetScale(0);
+            SetScale(0.01f);
             Scale.onScaleEvent.AddListener(OnScaleEvent);
         }
 
@@ -64,13 +65,15 @@ namespace Change
         {
             // size
             float d = Mathf.Pow(6 * (0.51f * Mathf.Abs(gasWeight)) / 3.14f, 0.333f);     // 6 * (Volumen von Co2 in Liter * Gewicht) / Pi  und davon dann über Mathf.Pow die Potenz von 1/3  ????
+            d = Mathf.Clamp(d, _minSize, Mathf.Infinity);
             transform.localScale = new Vector3(d, d, d);
         }
 
         private void Update()
         {
             // uplift
-            _rb.AddForce(Vector3.up * CalcUpdraft(_currentWeight), ForceMode.Acceleration);
+            if(_currentWeight > 0)
+                _rb.AddForce(Vector3.up * CalcUpdraft(_currentWeight), ForceMode.Acceleration);
         }
 
         private float CalcUpdraft(float gasWeight)
