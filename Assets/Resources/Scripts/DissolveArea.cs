@@ -10,11 +10,10 @@ namespace Change
         public enum Side { Right, Left, Front, Back }
 
         [Header("Target")]
-        public Material material;
+        public List<Material> materials = new List<Material>();
 
         [Header("Scaling")]
         [SerializeField] private float _scaleDuration = 1f;
-        [SerializeField] private Side sideToScale = Side.Left;
         [SerializeField] private Vector4 _fixedBounds = Vector4.zero;
 
         [Header("Debugging")]
@@ -22,7 +21,7 @@ namespace Change
         // right, left, front, back
 
         private Coroutine _scaleCoroutine = null;
-
+        private Side _sideToScale = Side.Left; // not fully implemeted.
 
 
         // Start is called before the first frame update
@@ -31,7 +30,7 @@ namespace Change
             Scale.onScaleEvent.AddListener(OnScaleEvent);
 
             // set starting bounds
-            if(sideToScale == Side.Right || sideToScale == Side.Left)
+            if(_sideToScale == Side.Right || _sideToScale == Side.Left)
                 _bounds = new Vector4(0, 0, FixedWidth, FixedWidth); // set front and back of the area plane (width of the area)
             else // front back
                 _bounds = new Vector4(FixedWidth, FixedWidth, 0, 0); // set front and back of the area plane (width of the area)
@@ -47,7 +46,7 @@ namespace Change
             // old: Vector4 nextBounds = new Vector4(sideLength + _offsetBounds.x, 0, FixedWidth + _offsetBounds.z, FixedWidth + _offsetBounds.w);
             Vector4 nextBounds = _bounds;
 
-            switch (sideToScale)
+            switch (_sideToScale)
             {
                 case Side.Right:
                     nextBounds = new Vector4(0, sideLength, FixedWidth, FixedWidth);
@@ -102,7 +101,6 @@ namespace Change
             Vector4 planeLeftVector;
             Vector4 planeFrontVector;
             Vector4 planeBackVector;
-            Debug.Log("Fixedbounds.x: " + _fixedBounds.x);
 
             // x
             if (_fixedBounds.x == 0)
@@ -129,10 +127,13 @@ namespace Change
                 planeBackVector = new Vector4(planeFront.normal.x, planeFront.normal.y, -planeFront.normal.z, planeFront.distance + _fixedBounds.w);
 
 
-            material.SetVector("_PlaneRight", planeRightVector);
-            material.SetVector("_PlaneLeft", planeLeftVector);
-            material.SetVector("_PlaneFront", planeFrontVector);
-            material.SetVector("_PlaneBack", planeBackVector);
+           foreach(Material material in materials)
+            {
+                material.SetVector("_PlaneRight", planeRightVector);
+                material.SetVector("_PlaneLeft", planeLeftVector);
+                material.SetVector("_PlaneFront", planeFrontVector);
+                material.SetVector("_PlaneBack", planeBackVector);
+            }
         }
 
         //private void Update()
