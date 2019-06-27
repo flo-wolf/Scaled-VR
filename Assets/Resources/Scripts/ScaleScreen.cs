@@ -12,26 +12,52 @@ namespace Change
     {
 
         [System.Serializable]
-        private enum Infotype { water, gas, ground, calories };
-        [SerializeField] private Infotype infotype;
+        private enum Infotype { water, gas, area, calories, weight };
+
+        [Header("Value Display")]
+        [SerializeField] private Infotype _intoType;
         [SerializeField] private float _countDuration = 1f;
-        [SerializeField] private TMPro.TextMeshPro screentext;
+        [SerializeField] private TMPro.TextMeshPro _valueText;
+        [SerializeField] private TMPro.TextMeshPro _subText;
+     
+
+        [Header("Subtext")]
+        [SerializeField] private string _waterString = "liters of water";
+        [SerializeField] private string _gasString = "grams of CO2";
+        [SerializeField] private string _areaString = "m<sub>2</sub> of acreage";
+        [SerializeField] private string _caloriesString = "kcal";
+
+
         private float currentValue;
         private float newValue;
-
         private Coroutine _countCoroutine = null;
 
         private void Start()
         {
             Scale.onScaleEvent.AddListener(OnScaleEvent);
-            screentext = transform.GetComponentInChildren<TMPro.TextMeshPro>();
-          
+
+            // set subline text
+            switch(_intoType){
+                case Infotype.water:
+                    _subText.text = _waterString;
+                    break;
+                case Infotype.gas:
+                    _subText.text = _gasString;
+                    break;
+                case Infotype.area:
+                    _subText.text = _areaString;
+                    break;
+                case Infotype.calories:
+                    _subText.text = _caloriesString;
+                    break;
+            }
+           
 
         }
         private void OnScaleEvent(Food.Emission emission)
         {
             currentValue = newValue;
-            switch (infotype)
+            switch (_intoType)
             {
                 case Infotype.water:
                     newValue = emission.waterLiters;
@@ -39,7 +65,7 @@ namespace Change
                     break;
 
 
-                case Infotype.ground:
+                case Infotype.area:
                     newValue = emission.areaSqrMeters;
                     break;
 
@@ -78,7 +104,7 @@ namespace Change
                 lerpT = Mathf.SmoothStep(0, 1, t / duration);
 
                 value = Mathf.Lerp(currentValue, newValue, lerpT);
-                screentext.text = String.Format("{0:#,0}", (int)value) + " liters";
+                _valueText.text = String.Format("{0:#,0}", (int)value);
 
                 yield return null;
             }
