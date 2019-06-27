@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7927722510090222441
 Transform:
   m_ObjectHideFlags: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b41d115519d4774797f33bbf1afbb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPrefab: {fileID: 6504175590853020085, guid: f14b7d23fea30054488aede68b487489,
+  _spawnPrefab: {fileID: 8606650521495379988, guid: bef81f47a4f54604e96050ad5d9b9e70,
     type: 3}
   _spawnDelay: 0.1
   _despawnDelay: 0.1
@@ -51,13 +51,13 @@ MonoBehaviour:
   _fixedDespawnDuration: 0.5
   _useSpawnDurationInsteadOfDelay: 1
   _useDespawnDurationInsteadOfDelay: 1
-  _instantDespawn: 0
-  _amountPerLayerX: 20
+  _instantDespawn: 1
+  _amountPerLayerX: 10
   _amountPerLayerZ: 10
   _maxLayers: 20
   _stepX: 2.5
-  _stepY: 3
+  _stepY: 3.5
   _stepZ: 2
-  _offsetY: -0.5
+  _offsetY: 1.25
   _offsetX: 0
-  _offsetZ: 3
+  _offsetZ: 9.5

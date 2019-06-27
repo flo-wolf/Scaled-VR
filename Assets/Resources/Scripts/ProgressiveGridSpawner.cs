@@ -95,7 +95,9 @@ namespace Change
                     fixedDelay = _fixedSpawnDuration / Mathf.Abs(_spawnedObjects.Count - endAmount);
 
                delayDelta = fixedDelay;
-               
+
+                Debug.Log("Spawnging Begin Bathtub Amount: " + _spawnedObjects.Count + " endCOunt: " + endAmount);
+
 
                 // start at the buttom layer, move through that grid, then move a layer up and repeat.
                 for (y = 0; y < _maxLayers; y++)
@@ -125,13 +127,15 @@ namespace Change
                                 // we spanwed enough bathtubs, stop this sorcery!!
                                 if (_spawnedObjects.Count >= endAmount)
                                     yield break;
+                            }
 
-                                // add right side
-                                TrySpawnObjectAt(gridPosRight);
-
+                            // add right side
+                            if (TrySpawnObjectAt(gridPosRight))
+                            {
                                 // we spanwed enough bathtubs, stop this sorcery!!
                                 if (_spawnedObjects.Count >= endAmount)
                                     yield break;
+                            }
 
 
                                 /* FLO
@@ -168,7 +172,7 @@ namespace Change
                                     yield return new WaitForSeconds(delayDelta); // THIS CAUSES PROBLEMS when the delay is smaller than the deltatime. 1 bathtub per frame, min.
                                 }
                                 
-                            }
+                            
                         }
                     }
                 }
