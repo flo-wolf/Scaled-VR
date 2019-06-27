@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 582941229909461347}
   - component: {fileID: 6569499093987833242}
   - component: {fileID: 3474165941518490034}
-  - component: {fileID: 3474165941518490035}
   - component: {fileID: 2457185383100881719}
+  - component: {fileID: 34484292651199576}
   m_Layer: 0
   m_Name: Tomato
   m_TagString: Interactable
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4834432309140062534}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.831, y: 1.277, z: 0.76355743}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
@@ -96,19 +96,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &3474165941518490035
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4834432309140062534}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.095668525
-  m_Center: {x: -0.000000011175871, y: 0.0027578995, z: -0.000000018626451}
 --- !u!114 &2457185383100881719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +110,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 1000
-    gasGrams: 1000
-    areaSqrMeters: 10
-    kcal: 1000
+    waterLiters: 23.54
+    gasGrams: 37.29
+    areaSqrMeters: 0.132
+    kcal: 19.8
+    weight: 110
+--- !u!64 &34484292651199576
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834432309140062534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 70948873267775455, guid: 7aa091b9a6509b9469820a8cc6117e5e, type: 3}

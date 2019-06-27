@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4844592170484881876}
   - component: {fileID: 1155168365336601901}
   - component: {fileID: 3695864823920575473}
-  - component: {fileID: 3695864823920575475}
   - component: {fileID: 590572270402182787}
+  - component: {fileID: 1690109390295668100}
   m_Layer: 0
   m_Name: Bread
   m_TagString: Interactable
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 593117866828108273}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.638, y: 1.116, z: 0.326}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.4, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,19 +96,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3695864823920575475
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593117866828108273}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.59046143, y: 0.24960716, z: 0.44868967}
-  m_Center: {x: 0, y: 0.12480358, z: 0}
 --- !u!114 &590572270402182787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +110,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 1000
-    gasGrams: 500
-    areaSqrMeters: 10
-    kcal: 1000
+    waterLiters: 804
+    gasGrams: 384
+    areaSqrMeters: 2.4
+    kcal: 1325
+    weight: 500
+--- !u!64 &1690109390295668100
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593117866828108273}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 8855157326371233899, guid: 7ef32f4bdf6533645809ae138e41ce41, type: 3}

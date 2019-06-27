@@ -15,6 +15,7 @@ namespace Change
             public float gasGrams;   // gas weight
             public float areaSqrMeters;  // sqr meters
             public float kcal; // kilo calories
+            public float weight; // weight
         }
 
         public Emission emission = new Emission
@@ -23,6 +24,7 @@ namespace Change
             gasGrams = 1000f,
             areaSqrMeters = 10f,
             kcal = 1000f,
+            weight = 100f,
         };
     }
 }

@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7436128955513378036}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.017, y: 3.55, z: -0.029}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
@@ -124,7 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 15000
-    gasGrams: 543
-    areaSqrMeters: 10
-    kcal: 1000
+    waterLiters: 2538.9
+    gasGrams: 465.9
+    areaSqrMeters: 3.735
+    kcal: 545.4
+    weight: 300

@@ -6,7 +6,7 @@
 
 Shader "Triplanar/Surface Shader (RNM)" {
 	Properties{
-		_MainTex("Albedo (RGB)", 2D) = "white" {}
+		_MainTex("Albedo (RGB)", 2D) = "black" {}
 		[NoScaleOffset] _BumpMap("Normal Map", 2D) = "bump" {}
 		_Glossiness("Smoothness", Range(0, 1)) = 0.5
 		[Gamma] _Metallic("Metallic", Range(0, 1)) = 0
@@ -144,8 +144,8 @@ Shader "Triplanar/Surface Shader (RNM)" {
 				// set surface ouput properties
 				o.Albedo = col.rgb;
 				o.Metallic = _Metallic;
-				o.Smoothness = _Glossiness;
-				o.Occlusion = occ;
+				o.Smoothness = occ;
+				//o.Occlusion = occ;
 
 				// convert world space normals into tangent normals
 				o.Normal = WorldToTangentNormalVector(IN, worldNormal);
