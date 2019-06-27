@@ -23,9 +23,10 @@ namespace Change
 
         [Header("Subtext")]
         [SerializeField] private string _waterString = "liters of water";
-        [SerializeField] private string _gasString = "grams of CO2";
-        [SerializeField] private string _areaString = "m<sub>2</sub> of acreage";
+        [SerializeField] private string _gasString = "grams of CO<sub>2</sub>";
+        [SerializeField] private string _areaString = "m<sup>2</sup> of acreage";
         [SerializeField] private string _caloriesString = "kcal";
+        [SerializeField] private string _weightString = "kg";
 
 
         private float currentValue;

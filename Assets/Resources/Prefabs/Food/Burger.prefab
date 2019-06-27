@@ -124,8 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 2538.9
-    gasGrams: 465.9
-    areaSqrMeters: 3.735
-    kcal: 545.4
-    weight: 300
+    waterLiters: 2545
+    gasGrams: 2248
+    areaSqrMeters: 26
+    kcal: 615
+    weight: 310
