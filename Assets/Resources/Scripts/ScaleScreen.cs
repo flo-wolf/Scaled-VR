@@ -15,7 +15,7 @@ namespace Change
         private enum Infotype { water, gas, area, calories, weight };
 
         [Header("Value Display")]
-        [SerializeField] private Infotype _intoType;
+        [SerializeField] private Infotype _infoType;
         [SerializeField] private float _countDuration = 1f;
         [SerializeField] private TMPro.TextMeshPro _valueText;
         [SerializeField] private TMPro.TextMeshPro _subText;
@@ -38,7 +38,7 @@ namespace Change
             Scale.onScaleEvent.AddListener(OnScaleEvent);
 
             // set subline text
-            switch(_intoType){
+            switch(_infoType){
                 case Infotype.water:
                     _subText.text = _waterString;
                     break;
@@ -58,13 +58,11 @@ namespace Change
         private void OnScaleEvent(Food.Emission emission)
         {
             currentValue = newValue;
-            switch (_intoType)
+            switch (_infoType)
             {
                 case Infotype.water:
                     newValue = emission.waterLiters;
-                    Debug.Log("Water" + emission.waterLiters);
                     break;
-
 
                 case Infotype.area:
                     newValue = emission.areaSqrMeters;
@@ -75,7 +73,11 @@ namespace Change
                     break;
 
                 case Infotype.calories:
-                    newValue = emission.waterLiters;
+                    newValue = emission.kcal;
+                    break;
+
+                case Infotype.weight:
+                    newValue = emission.weight;
                     break;
 
                 default:
@@ -105,7 +107,15 @@ namespace Change
                 lerpT = Mathf.SmoothStep(0, 1, t / duration);
 
                 value = Mathf.Lerp(currentValue, newValue, lerpT);
+
+
                 _valueText.text = String.Format("{0:#,0}", (int)value);
+
+                if (_infoType == Infotype.weight)
+                {
+                    _valueText.text = String.Format("{0:0,000,0}", (int)value);
+                }
+                    
 
                 yield return null;
             }
