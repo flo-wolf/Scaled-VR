@@ -41,6 +41,13 @@ namespace Change
 
         private void OnScaleEvent(Food.Emission emission)
         {
+            /*
+            float sideLength = Mathf.CeilToInt(emission.areaSqrMeters / FixedWidth);
+
+            if (emission.areaSqrMeters > 0)
+                sideLength += 0.1f;
+                */
+
             float sideLength = emission.areaSqrMeters / FixedWidth;
 
             // old: Vector4 nextBounds = new Vector4(sideLength + _offsetBounds.x, 0, FixedWidth + _offsetBounds.z, FixedWidth + _offsetBounds.w);

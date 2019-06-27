@@ -22,6 +22,7 @@ namespace Change
             Scale.onScaleEvent.AddListener(OnScaleEvent);
         }
 
+        // listen to the scale event, recieve emission data calculated by the scale
         private void OnScaleEvent(Food.Emission emission)
         {
             float goalHeight = Mathf.Clamp01(emission.kcal.Remap(0, _maxKcal, 0, 1));
