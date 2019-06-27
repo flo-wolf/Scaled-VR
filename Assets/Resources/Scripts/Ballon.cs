@@ -74,14 +74,23 @@ namespace Change
 
             d = Mathf.Clamp(d, _minSize, Mathf.Infinity);
             transform.localScale = new Vector3(d, d, d);
+
+            
         }
 
         private void Update()
         {
             // uplift
-            if(_currentWeight > 0)
+            if (_currentWeight > 0)
                 _rb.AddForce(Vector3.up * CalcUpdraft(_currentWeight), ForceMode.Acceleration);
+
+            else
+            {
+                _rb.velocity = Vector3.zero;
+                transform.localPosition = new Vector3(0f, 0.3f, 0f);
+            }
         }
+
 
         private float CalcUpdraft(float gasWeight)
         {
