@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Verpackung_Rot
-  m_Shader: {fileID: 4800000, guid: ea1091f2793ab274db00d6c0e1186fd9, type: 3}
+  m_Name: Food_Beef
+  m_Shader: {fileID: 4800000, guid: 97d9a4fbcb4777f4aa53ef10a44594be, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +19,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Bump:
-        m_Texture: {fileID: 2800000, guid: 4234b228d3bd09d479f28c33aeb09b86, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 407c1b79be8422746857be5f1e56c03f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,11 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c54d37b5579357543b5df08803cd6300, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Mask1:
-        m_Texture: {fileID: 2800000, guid: 31f51c0d0c20cb54e8c1eb6bdb262116, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1f16bac37e1f6d048a6ad63d7ebb8232, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -56,21 +48,22 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 224bbe656376036469f1ec446bad8b5b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _RoughMap:
-        m_Texture: {fileID: 2800000, guid: 876d89182a895084192ba2db88366169, type: 3}
+    - _SmoothnessMap:
+        m_Texture: {fileID: 2800000, guid: acbdd4add96e0224a928a6eec804399c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _Distortion: 0.422
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 1
@@ -79,6 +72,8 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Power: 2.59
+    - _Scale: 1.25
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -86,5 +81,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorSecond: {r: 0.9716981, g: 0.21542363, b: 0.21542363, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

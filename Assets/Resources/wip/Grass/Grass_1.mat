@@ -83,7 +83,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlowColor: {r: 0, g: 0.0006395527, b: 0.0007314645, a: 1}
-    - _MainColor: {r: 0.8980392, g: 0.86756605, b: 0.16470589, a: 1}
+    - _MainColor: {r: 0.7232111, g: 0.745283, b: 0.14413491, a: 1}
     - _RimColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
     - _SecondColor: {r: 1, g: 0.95339304, b: 0.8160377, a: 1}
     - _lineSettings: {r: 1, g: 1, b: 1, a: -1}

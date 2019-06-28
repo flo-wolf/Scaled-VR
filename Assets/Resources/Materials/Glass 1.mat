@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Kcal_Inside
-  m_Shader: {fileID: 4800000, guid: affe4dbbbe0a0db4386eaa92cb4eaa9b, type: 3}
-  m_ShaderKeywords: 
+  m_Name: Glass 1
+  m_Shader: {fileID: 4800000, guid: 903c191afe19d064ca4f5a35ee1ecb8d, type: 3}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -39,16 +39,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _FillMaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _HighlightTex:
-        m_Texture: {fileID: 2800000, guid: f9da89f1bca50c84183a1b3bcabc7bc9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: -0.007}
-    - _LightSquareTex:
-        m_Texture: {fileID: 2800000, guid: c3236bef4682ee148a37ba40fc6b8d3a, type: 3}
+    - _FrostTex:
+        m_Texture: {fileID: 2800000, guid: ae8474c2196a18043ae05626ebcc2580, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -71,22 +63,20 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
+    - _FrostIntensity: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0.616
+    - _Glossiness: 0.756
     - _GlossyReflections: 1
-    - _Height: 0.4
     - _Metallic: 0
-    - _Mode: 0
+    - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _ZWrite: 1
-    - _startOffset: 0
+    - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.029575469, g: 0.57982713, b: 1.2540001, a: 1}
-    - _ColorHighlight: {r: 2.867925, g: 2.012052, b: 1.0961179, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.1764706}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

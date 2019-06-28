@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: SkyBox
   m_Shader: {fileID: 4800000, guid: b577cc7e2b66f4521979fd57ca0c8417, type: 3}
-  m_ShaderKeywords: _SWITCH2_ON _SWITCH3_ON _SWITCH4_ON
+  m_ShaderKeywords: _SWITCH2_ON _SWITCH4_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -60,11 +60,11 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exponent1: 1
-    - _Exponent2: 1
-    - _Exponent3: 1
+    - _Exponent1: 6.9
+    - _Exponent2: 4.4
+    - _Exponent3: 20
     - _Exponent4: 20
-    - _Exposure: 0.3
+    - _Exposure: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -76,26 +76,26 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Switch2: 1
-    - _Switch3: 1
+    - _Switch3: 0
     - _Switch4: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-    - _BottomColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
+    - _BottomColor: {r: 2.9960785, g: 2.4138649, b: 2.0235295, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.16, g: 0.18, b: 0.19, a: 1}
-    - _Color2: {r: 0.26, g: 0.28, b: 0.21, a: 1}
-    - _Color3: {r: 0.15, g: 0.15, b: 0.12, a: 1}
-    - _Color4: {r: 1, g: 0.99, b: 0.95, a: 1}
+    - _Color2: {r: 1, g: 1, b: 1, a: 1}
+    - _Color3: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+    - _Color4: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     - _Direction1: {r: 0, g: 1, b: 0, a: 1}
-    - _Direction2: {r: 0.5, g: 1, b: 0, a: 1}
-    - _Direction3: {r: -0.3, g: -1, b: -0.2, a: 1}
+    - _Direction2: {r: 1, g: -5, b: 30.15, a: 0}
+    - _Direction3: {r: 1, g: 0, b: 8, a: 0}
     - _Direction4: {r: 0, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MiddleColor: {r: 0.15, g: 0.15, b: 0.15, a: 1}
+    - _MiddleColor: {r: 0.011887974, g: 0.011887974, b: 0.011887974, a: 1}
     - _NormalizedVector1: {r: 0, g: 1, b: 0, a: 0}
-    - _NormalizedVector2: {r: 0.4472136, g: 0.8944272, b: 0, a: 0}
-    - _NormalizedVector3: {r: -0.28221625, g: -0.94072086, b: -0.18814416, a: 0}
+    - _NormalizedVector2: {r: 0.032703105, g: -0.16351552, b: 0.9859986, a: 0}
+    - _NormalizedVector3: {r: 0.12403473, g: 0, b: 0.99227786, a: 0}
     - _NormalizedVector4: {r: 0, g: 1, b: 0, a: 0}
-    - _TopColor: {r: 1.9999998, g: 1.9999998, b: 1.9999998, a: 1}
+    - _TopColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
