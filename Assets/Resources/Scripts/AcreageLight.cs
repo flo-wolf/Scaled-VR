@@ -12,8 +12,10 @@ namespace Change
         public enum Interpolation { EaseIn, EaseOut, SmoothStep}
 
         [Header("Fading")]
-        [SerializeField] private float _intensitiyFadeInDuration = 0.25f;
-        [SerializeField] private float _intensitiyFadeOutDuration = 0.5f;
+        [SerializeField] private float _fadeInDuration = 0.075f;
+        [SerializeField] private float _fadeOutDuration = 0.175f;
+        [SerializeField] private bool _fadeRange = true;
+        [SerializeField] private bool _fadeIntensity = false;
 
         [Header("Offsets (don't touch, lol)")]
         [SerializeField] private float _xToleranceBack = 5f;
@@ -22,17 +24,23 @@ namespace Change
        
         private Light _light;
         private float _initialIntensity;
-        private Coroutine _lerpCoroutine = null;
+        private float _initialRange;
 
+        private Coroutine _lerpCoroutine = null;
         private bool _withinArea = false;
 
         // Start is called before the first frame update
         void Start()
         {
             _light = GetComponent<Light>();
-            
+
+            _initialRange = _light.range;
             _initialIntensity = _light.intensity;
-            _light.intensity = 0f;
+
+            if(_fadeIntensity)
+                _light.intensity = 0f;
+            if(_fadeRange)
+                _light.range = 0f;
         }
 
         // Update is called once per frame
@@ -43,7 +51,7 @@ namespace Change
                 if (!_withinArea)
                 {
                     _withinArea = true;
-                    LerpIntensity(_initialIntensity);
+                    LerpIntensity(_initialIntensity, _initialRange);
                 }
             }
             else 
@@ -51,7 +59,7 @@ namespace Change
                 if (_withinArea)
                 {
                     _withinArea = false;
-                    LerpIntensity(0f);
+                    LerpIntensity(0f, 0f);
                 }
             }
         }
@@ -68,7 +76,7 @@ namespace Change
             return false;
         }
 
-        private void LerpIntensity(float endIntensity)
+        private void LerpIntensity(float endIntensity, float endRange)
         {
             if (_lerpCoroutine != null)
             {
@@ -77,22 +85,23 @@ namespace Change
             }
 
             if(endIntensity > _light.intensity)
-                _lerpCoroutine = StartCoroutine(C_LerpIntensity(endIntensity, true));
+                _lerpCoroutine = StartCoroutine(C_LerpIntensity(endIntensity, endRange, true));
             else
-                _lerpCoroutine = StartCoroutine(C_LerpIntensity(endIntensity, false));
+                _lerpCoroutine = StartCoroutine(C_LerpIntensity(endIntensity, endRange, false));
         }
 
-        IEnumerator C_LerpIntensity(float endIntensity, bool fadeIn)
+        IEnumerator C_LerpIntensity(float endIntensity, float endRange, bool fadeIn)
         {
             float t = 0f;
             float startIntensity = _light.intensity;
+            float startRange = _light.range;
 
             //duration
             float duration;
             if (fadeIn)
-                duration = _intensitiyFadeInDuration;
+                duration = _fadeInDuration;
             else
-                duration = _intensitiyFadeOutDuration;
+                duration = _fadeOutDuration;
 
             // interpolation
             Interpolation interpolation;
@@ -109,13 +118,22 @@ namespace Change
                 switch (interpolation)
                 {
                     case Interpolation.EaseIn:
-                        _light.intensity = Mathfx.Sinerp(startIntensity, endIntensity, (t / duration));
+                        if(_fadeIntensity)
+                            _light.intensity = Mathfx.Sinerp(startIntensity, endIntensity, (t / duration));
+                        if(_fadeRange)
+                            _light.range = Mathfx.Sinerp(startRange, endRange, (t / duration));
                         break;
                     case Interpolation.EaseOut:
-                        _light.intensity = Mathfx.Coserp(startIntensity, endIntensity, (t / duration));
+                        if (_fadeIntensity)
+                            _light.intensity = Mathfx.Coserp(startIntensity, endIntensity, (t / duration));
+                        if (_fadeRange)
+                            _light.range = Mathfx.Coserp(startRange, endRange, (t / duration));
                         break;
                     case Interpolation.SmoothStep:
-                        _light.intensity = Mathfx.SmoothStep(startIntensity, endIntensity, (t / duration));
+                        if (_fadeIntensity)
+                            _light.intensity = Mathfx.SmoothStep(startIntensity, endIntensity, (t / duration));
+                        if (_fadeRange)
+                            _light.range = Mathfx.SmoothStep(startRange, endRange, (t / duration));
                         break;
                 }
                 yield return null;
