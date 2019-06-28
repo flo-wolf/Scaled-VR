@@ -18,7 +18,7 @@ namespace Change
         [SerializeField] private bool _fadeIntensity = false;
 
         [Header("Offsets (don't touch, lol)")]
-        [SerializeField] private float _xToleranceBack = 5f;
+        [SerializeField] private float _xToleranceBack = 0f;
         [SerializeField] private float _xToleranceFront = 0f;
 
        
