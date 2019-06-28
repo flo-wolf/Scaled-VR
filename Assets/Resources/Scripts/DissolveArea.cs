@@ -7,6 +7,9 @@ namespace Change
     public class DissolveArea : MonoBehaviour
     {
         public static float FixedWidth { get; } = 10f;
+        public static float SideLength { get; private set; } = 0f;
+        public static float StartX { get; private set; } = 0f;
+
         public enum Side { Right, Left, Front, Back }
 
         [Header("Target")]
@@ -19,6 +22,7 @@ namespace Change
         [Header("Debugging")]
         [SerializeField] private Vector4 _bounds = Vector4.zero; // "strech" of the sides of a horizontal plane centering in transform.position into the four directions
         // right, left, front, back
+        
 
         private Coroutine _scaleCoroutine = null;
         private Side _sideToScale = Side.Left; // not fully implemeted.
@@ -27,6 +31,8 @@ namespace Change
         // Start is called before the first frame update
         void Start()
         {
+            StartX = transform.position.x;
+
             Scale.onScaleEvent.AddListener(OnScaleEvent);
 
             // set starting bounds
@@ -91,6 +97,8 @@ namespace Change
                 lerpT = Mathf.SmoothStep(0, 1, t / duration);
 
                 _bounds = Vector4.Lerp(startBounds, endBounds, lerpT);
+
+                SideLength = _bounds.x; // save sidelength. this value is the dynamic length
 
                 SetBounds(_bounds);
 
