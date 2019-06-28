@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4808271137279606229}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.823, y: 3.2225132, z: 1.022}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
@@ -125,11 +125,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 1000
-    gasGrams: 1000
-    areaSqrMeters: 10
-    kcal: 1000
-    weight: 100
+    waterLiters: 287
+    gasGrams: 199
+    areaSqrMeters: 1.4
+    kcal: 860
+    weight: 1000
 --- !u!1001 &8553883244855445896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196,21 +196,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 1840ab03d77998a499c3df6d825a19a7,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 1840ab03d77998a499c3df6d825a19a7,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: 1840ab03d77998a499c3df6d825a19a7,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 1840ab03d77998a499c3df6d825a19a7,
         type: 3}

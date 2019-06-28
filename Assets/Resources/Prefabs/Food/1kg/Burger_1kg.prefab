@@ -125,11 +125,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 1000
-    gasGrams: 1000
-    areaSqrMeters: 10
-    kcal: 1000
-    weight: 100
+    waterLiters: 8208
+    gasGrams: 7250
+    areaSqrMeters: 85
+    kcal: 1985
+    weight: 1000
 --- !u!1001 &4997693300607363332
 PrefabInstance:
   m_ObjectHideFlags: 0

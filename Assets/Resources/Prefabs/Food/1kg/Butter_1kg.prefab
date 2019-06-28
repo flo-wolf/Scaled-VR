@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7031855222426562734}
   - component: {fileID: 7031855222426562721}
   m_Layer: 0
-  m_Name: Butter (1)
+  m_Name: Butter_1kg
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveHand: {fileID: 0}
   emission:
-    waterLiters: 102.7
-    gasGrams: 62.4
-    areaSqrMeters: 0.286
-    kcal: 114.4
-    weight: 130
+    waterLiters: 5553
+    gasGrams: 23794
+    areaSqrMeters: 115
+    kcal: 7800
+    weight: 1000
