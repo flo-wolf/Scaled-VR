@@ -78,7 +78,7 @@ namespace Change
             
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // uplift
             if (_currentWeight > 0)
