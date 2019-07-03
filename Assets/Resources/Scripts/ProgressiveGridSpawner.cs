@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Change
     // somewhere, "Bathtub Manager" is someones job title...
     public class ProgressiveGridSpawner : MonoBehaviour
     {
-        
+        [Serializable]
         struct GridPosition                                             // position of an object inside the grid (custom coordinate system)
         {
             public int x; // column
@@ -44,7 +45,7 @@ namespace Change
         private Dictionary<GridPosition, GameObject> _spawnedObjects = new Dictionary<GridPosition, GameObject>();
 
         // we need to keep track of the last added positions in order to create shortcuts for the algorithm. The dictionary doesn't do that.
-        private List<GridPosition> _positionHistory = new List<GridPosition>();
+        [SerializeField] private List<GridPosition> _positionHistory = new List<GridPosition>();
 
         // in case our deltaTime is bigger than our spawn/despawn delay, we need to keep track of the deltaTime. Otherwise we can only spawn a minimum of 1 bathtub per frame, which is too slow.
         private float _delayDelta = 0f;
@@ -168,7 +169,11 @@ namespace Change
                                 else
                                 {
                                     if (lastFrameDelayed)
-                                        delayDelta -= Time.deltaTime;
+                                {
+                                    delayDelta -= Time.deltaTime;
+                                    lastFrameDelayed = false;
+                                }
+                                       
                                     yield return new WaitForSeconds(delayDelta); // THIS CAUSES PROBLEMS when the delay is smaller than the deltatime. 1 bathtub per frame, min.
                                 }
                                 
@@ -224,17 +229,19 @@ namespace Change
                                 // we removed enough bathtubs, stop this sorcery!!
                                 if (_spawnedObjects.Count <= endAmount)
                                     yield break;
+                            }
 
-                                // remove right side
-                                TryDespawnObjectAt(gridPosRight);
 
+                            // remove right side
+                            if (TryDespawnObjectAt(gridPosRight))
+                            {
                                 // we removed enough bathtubs, stop this sorcery!!
                                 if (_spawnedObjects.Count <= endAmount)
                                     yield break;
-
-                                if(!_instantDespawn)
-                                    yield return new WaitForSeconds(fixedDelay);
                             }
+
+                            if (!_instantDespawn)
+                                    yield return new WaitForSeconds(fixedDelay);
                         }
                     }
                 }

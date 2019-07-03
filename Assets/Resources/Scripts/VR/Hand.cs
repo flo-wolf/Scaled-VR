@@ -27,14 +27,14 @@ namespace Change
             // Trigger Down
             if (m_GrabAction.GetStateDown(m_Pose.inputSource))
             {
-                print(m_Pose.inputSource + " Trigger Down");
+                //print(m_Pose.inputSource + " Trigger Down");
                 Pickup();
             }
 
             // Trigger Up
             if (m_GrabAction.GetStateUp(m_Pose.inputSource))
             {
-                print(m_Pose.inputSource + " Trigger Up");
+                //print(m_Pose.inputSource + " Trigger Up");
                 Drop();
             }
         }
@@ -72,7 +72,7 @@ namespace Change
             if (!m_CurrentInteractable)
                 return;
 
-            Debug.Log("nearest on pickup: " + m_ContectInteractables);
+           // Debug.Log("nearest on pickup: " + m_ContectInteractables);
 
             // already held, check
             if (m_CurrentInteractable.m_ActiveHand)
