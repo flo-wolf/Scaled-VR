@@ -46,7 +46,7 @@ namespace Change
         // Update is called once per frame
         void Update()
         {
-            if (IsWithinArea())
+            if (IsWithinArea() && DissolveArea.SideLength > 0)
             {
                 if (!_withinArea)
                 {
