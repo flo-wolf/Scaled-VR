@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Resources/Scenes/Main_010 Multimediapreis.unity
+    guid: 966d51405430e2d4ab4694dead4a0b89
   m_configObjects: {}
